@@ -5,12 +5,6 @@ import question1.*;
 
 public class TestsDesVisiteurs extends junit.framework.TestCase{
 
-    public void testACompleter(){
-        fail(" cette méthode de tests, est à compléter, appels des trois visiteurs....");
-    }
-
-
-
     public void testCompositeValide(){
         try{
             GroupeDeContributeurs g = new GroupeDeContributeurs("g");
@@ -58,4 +52,5 @@ public class TestsDesVisiteurs extends junit.framework.TestCase{
         }
     }
 }
+
 
