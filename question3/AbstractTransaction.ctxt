@@ -10,4 +10,6 @@ comment4.params=cotisant
 comment4.target=AbstractTransaction(question1.Cotisant)
 comment5.params=somme
 comment5.target=void\ debit(int)
-numComments=6
+comment6.params=somme
+comment6.target=void\ credit(int)
+numComments=7
