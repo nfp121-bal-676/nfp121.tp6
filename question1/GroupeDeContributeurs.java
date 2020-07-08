@@ -1,52 +1,77 @@
-package question1;
-
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Stack;
-
-public class GroupeDeContributeurs extends Cotisant implements Iterable<Cotisant>{
-  private List<Cotisant> liste;
-  
-  public GroupeDeContributeurs(String nomDuGroupe){
-    super(nomDuGroupe);
-    // a completer
-  }
-  
-  public void ajouter(Cotisant cotisant){
-    // a completer
-  }
-  
-  
-  public int nombreDeCotisants(){
-    int nombre = 0;
-    // a completer
-    return nombre;
-  }
-  
-  public String toString(){
-    String str = new String();
-    // a completer
-    return str;
-  }
-  
-  public List<Cotisant> getChildren(){
-    return null;// a completer
-  }
-  
-  public void debit(int somme) throws SoldeDebiteurException{
-    // a completer
-  }
-  
-  public void credit(int somme){
-    // a completer
+    package question1;
+    
+    import java.util.Iterator;
+    import java.util.NoSuchElementException;
+    
+    import java.util.List;
+    import java.util.ArrayList;
+    import java.util.Stack;
+    
+    public class GroupeDeContributeurs extends Cotisant implements Iterable<Cotisant>{
+      private List<Cotisant> liste;
+      
+      public GroupeDeContributeurs(String nomDuGroupe){
+        super(nomDuGroupe);
+        this.liste = new ArrayList<>();
+      }
+      
+      public void ajouter(Cotisant cotisant){
+        this.liste.add(cotisant);                             
+        cotisant.setParent(this); 
+      }
+      
+      
+      public int nombreDeCotisants(){
+        int nombre = 0;                             
+        Iterator<Cotisant> it = liste.iterator();
+        while(it.hasNext()){                             
+            Cotisant c = it.next(); 
+            if(c instanceof Contributeur){                             
+                nombre +=1; }
+            else{                             
+                nombre += c.nombreDeCotisants(); 
+            } 
+        } 
+        return nombre;
+      }
+      
+      public String toString(){
+        String str = new String();
+        for(Cotisant c: this.liste){                             
+                str +=  c.toString()+" \n " ; 
+        } 
+        return str;
+      }
+      
+      public List<Cotisant> getChildren(){
+        return this.liste; 
+      }
+      
+      public void debit(int somme) throws SoldeDebiteurException{
+        if(somme <  0) 
+            throw new RuntimeException("nombre negatif !!!"); 
+        else
+            for(Cotisant c: this.liste)
+                try{                             
+                    c.debit(somme); 
+                }catch( SoldeDebiteurException e){ 
+                    throw new SoldeDebiteurException(); 
+                }
+      }
+      
+      public void credit(int somme){
+        if(somme <  0)
+            throw new RuntimeException("nombre negatif !!!");
+        else
+            for(Cotisant c: this.liste)                             
+                c.credit(somme); 
+              
   }
   
   public int solde(){
     int solde = 0;
-    // a completer
+    for(Cotisant c: this.liste)                           
+        solde += c.solde(); 
     return solde;
   }
   

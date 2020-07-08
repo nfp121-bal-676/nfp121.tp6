@@ -6,7 +6,12 @@ public class Contributeur extends Cotisant{
   
   public Contributeur(String nom, int somme){
     super(nom);
-    // a completer
+    if(somme>=0)                             
+        this.solde = somme; 
+     
+    else 
+        throw new RuntimeException("nombre negatif !!!"); 
+    
   }
   
   public int solde(){
@@ -16,28 +21,40 @@ public class Contributeur extends Cotisant{
   public int nombreDeCotisants(){
     return 1;
   }
-	public void debit(int somme) throws SoldeDebiteurException{
-	  // a completer
-	}
-	
-	/**
-	 * throws RuntimeException new RuntimeException("nombre négatif !!!");
-	 */
+  
+  public void debit(int somme) throws SoldeDebiteurException{
+    if(somme > solde)
+        throw new SoldeDebiteurException(); 
+     else if (somme < 0)
+        throw new RuntimeException("nombre negatif !!!"); 
+    else                               
+        this.solde -= somme; 
+    
+  }
+    
+    /**
+     * throws RuntimeException new RuntimeException("nombre négatif !!!");
+     */
   public  void credit(int somme){
-	  // a completer
-	}
-	
-	/**
-	 * throws RuntimeException new RuntimeException("nombre négatif !!!");
-	 */
-  public void affecterSolde(int somme){
-    // if(somme <0) throw new RuntimeException("nombre négatif !!!");
-    try{
-      debit(solde()); credit(somme);// mode élégant ... 
-    }catch(SoldeDebiteurException sde){ 
-      // exception peu probable
-      this.solde = somme; // mode efficace ...
+      if(somme <  0) 
+            throw new RuntimeException("nombre negatif !!!"); 
+         else                            
+            this.solde += somme; 
+        
     }
+    
+    /**
+     * throws RuntimeException new RuntimeException("nombre négatif !!!");
+     */
+  public void affecterSolde(int somme){
+    if(somme <0) 
+        throw new RuntimeException("nombre n�gatif !!!"); 
+    try{                             
+        debit(solde());                             
+        credit(somme);
+    }catch(SoldeDebiteurException sde){             
+        this.solde = somme;
+    } 
   }
   
   public <T> T accepter(Visiteur<T> visiteur){
